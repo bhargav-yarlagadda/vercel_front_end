@@ -5,9 +5,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { UserMenu } from "./User";
 
 export default function Navbar() {
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuth(); //ducktyped user
 
-  console.log(user);
+ 
   return (
     <nav className="flex justify-between items-center p-4">
       <Link href="/" className="flex items-center gap-2">
@@ -31,8 +31,8 @@ export default function Navbar() {
         />
       ) : (
         <Link
-          href={process.env.NEXT_PUBLIC_BACKEND_URL + "/auth/github/login"}
-          className="bg-white text-black rounded-md py-2 px-4"
+          href={"/login"}
+        className="bg-white text-black rounded-md py-2 px-4"
         >
           Log in
         </Link>

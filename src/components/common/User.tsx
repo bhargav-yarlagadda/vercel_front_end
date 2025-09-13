@@ -2,8 +2,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { FiPlus, FiLogOut, FiTriangle} from "react-icons/fi";
-
+import { FiPlus, FiLogOut, FiTriangle } from "react-icons/fi";
+import { useAuth } from "@/hooks/useAuth";
 interface UserProps {
   login: string;
   avatar_url: string;
@@ -11,20 +11,28 @@ interface UserProps {
   email?: string;
 }
 
-export const UserMenu: React.FC<UserProps> = ({ login, avatar_url, name, email }) => {
+export const UserMenu: React.FC<UserProps> = ({
+  login,
+  avatar_url,
+  name,
+  email,
+}) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { setUser } = useAuth();
 
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-
   }, []);
 
   return (
@@ -42,7 +50,9 @@ export const UserMenu: React.FC<UserProps> = ({ login, avatar_url, name, email }
       {/* Dropdown */}
       <div
         className={`absolute right-0 mt-2 w-72 rounded-xl shadow-lg border border-gray-700 bg-white dark:bg-[#111] text-sm transition-all duration-200 origin-top-right ${
-          open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
+          open
+            ? "scale-100 opacity-100"
+            : "scale-95 opacity-0 pointer-events-none"
         }`}
       >
         {/* User Info */}
@@ -58,11 +68,21 @@ export const UserMenu: React.FC<UserProps> = ({ login, avatar_url, name, email }
           <MenuItem label="Create Team" icon={<FiPlus />} />
         </div>
 
-
-
         <div className="py-2 border-t border-gray-700">
           <MenuItem label="Home Page" icon={<FiTriangle />} />
-          <MenuItem label="Log Out" icon={<FiLogOut />} />
+          <MenuItem
+            label="Log Out"
+            callback={async () => {
+              const backendurl = process.env.NEXT_PUBLIC_BACKEND_URL!;
+              const resp = await fetch(backendurl + "/auth/github/logout", {
+                credentials: "include", // needed for cookies
+              });
+              if (resp.ok) {
+                setUser(null);
+              }
+            }}
+            icon={<FiLogOut />}
+          />
         </div>
 
         {/* CTA Button */}
@@ -80,10 +100,19 @@ interface MenuItemProps {
   label: string;
   icon?: React.ReactNode;
   shortcut?: string;
+  callback?: () => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ label, icon, shortcut }) => (
-  <div className="flex justify-between items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+const MenuItem: React.FC<MenuItemProps> = ({
+  label,
+  icon,
+  shortcut,
+  callback,
+}) => (
+  <div
+    onClick={callback}
+    className="flex justify-between items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+  >
     <span>{label}</span>
     <div className="flex items-center gap-2 text-gray-500 text-xs">
       {shortcut && <span>{shortcut}</span>}

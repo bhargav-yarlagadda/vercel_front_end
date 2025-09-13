@@ -11,7 +11,7 @@ const DevToDeploy = dynamic(() => import("../DevToDeploy"), {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="w-full mt-[50vh] bg-[#0f1313] border-t border-gray-800 px-6 py-10 md:px-24 flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
+    <footer className="w-full  bg-[#0f1313] border-t border-gray-800 px-6 py-10 md:px-24 flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
       {/* Left Side */}
       <div className="flex flex-1 flex-col gap-4 w-full md:w-auto items-center md:items-start text-center md:text-left">
         <span className="font-kode-mono text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-extrabold text-gray-600 leading-none">

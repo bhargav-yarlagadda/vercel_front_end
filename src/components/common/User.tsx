@@ -2,8 +2,11 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { FiPlus, FiLogOut, FiTriangle } from "react-icons/fi";
+import Link from "next/link";
+import { FiPlus, FiLogOut, FiTriangle ,FiSettings} from "react-icons/fi";
+import { MdOutlineDashboard } from "react-icons/md";
 import { useAuth } from "@/hooks/useAuth";
+
 interface UserProps {
   login: string;
   avatarUrl: string;
@@ -34,9 +37,9 @@ export const UserMenu: React.FC<UserProps> = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  
+
   return (
-    <div className="relative z-20  inline-block" ref={dropdownRef}>
+    <div className="relative z-20 inline-block" ref={dropdownRef}>
       {/* Avatar */}
       <Image
         src={avatarUrl}
@@ -63,23 +66,21 @@ export const UserMenu: React.FC<UserProps> = ({
 
         {/* Menu Items */}
         <div className="py-2">
-          <MenuItem label="Dashboard" />
-          <MenuItem label="Account Settings" />
-          <MenuItem label="Create Team" icon={<FiPlus />} />
+          <MenuLink href="/dashboard" label="Dashboard" icon={<MdOutlineDashboard />} />
+          <MenuLink href="/account" label="Account Settings"icon={<FiSettings/>} />
+          <MenuLink href="/team/create" label="Create Team" icon={<FiPlus />} />
         </div>
 
         <div className="py-2 border-t border-gray-700">
-          <MenuItem label="Home Page" icon={<FiTriangle />} />
+          <MenuLink href="/" label="Home Page" icon={<FiTriangle />} />
           <MenuItem
             label="Log Out"
             callback={async () => {
               const backendurl = process.env.NEXT_PUBLIC_BACKEND_URL!;
               const resp = await fetch(backendurl + "/auth/github/logout", {
-                credentials: "include", // needed for cookies
+                credentials: "include",
               });
-              if (resp.ok) {
-                setUser(null);
-              }
+              if (resp.ok) setUser(null);
             }}
             icon={<FiLogOut />}
           />
@@ -119,4 +120,25 @@ const MenuItem: React.FC<MenuItemProps> = ({
       {icon}
     </div>
   </div>
+);
+
+// ✅ Reusable MenuLink component for Next.js links
+interface MenuLinkProps {
+  label: string;
+  href: string;
+  icon?: React.ReactNode;
+  shortcut?: string;
+}
+
+const MenuLink: React.FC<MenuLinkProps> = ({ label, href, icon, shortcut }) => (
+  <Link
+    href={href}
+    className="flex justify-between items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+  >
+    <span>{label}</span>
+    <div className="flex items-center gap-2 text-gray-500 text-xs">
+      {shortcut && <span>{shortcut}</span>}
+      {icon}
+    </div>
+  </Link>
 );

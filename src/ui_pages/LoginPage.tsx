@@ -6,6 +6,8 @@ import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import Loading from "@/components/common/Loader";
+
 
 const cardsContent = [
   { title: "Portfolio Site", desc: "Your personal website deployed instantly.", status: "Live", color: "text-green-400" },
@@ -24,10 +26,14 @@ const positions = [
 
 const LoginPage = () => {
     const router = useRouter()
-    const {user} = useAuth()
-    if(user){
-        router.push("/dashboard")
+    const {user,loading} = useAuth()
+      useEffect(() => {
+    if (!loading && user) {
+      router.push("/dashboard");
     }
+  }, [user, router]);
+
+
   // only 4 cards
   const [order, setOrder] = useState([0, 1, 2, 3]);
 
@@ -43,6 +49,7 @@ const LoginPage = () => {
     return () => clearInterval(interval);
   }, []);
 
+  
   return (
     <div className="min-h-screen w-full flex  items-center justify-center px-4 md:px-20 pb-10 text-white">
       <div className="flex flex-col md:flex-row w-full  bg-black rounded-xl overflow-hidden">

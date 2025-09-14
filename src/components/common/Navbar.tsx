@@ -24,9 +24,9 @@ export default function Navbar() {
         />
       ) : user ? (
         <UserMenu
-          login={user.login}
+          login={user.username}
           name={user.name}
-          avatar_url={user.avatar_url}
+          avatarUrl={user.avatarUrl}
           email={user.email}
         />
       ) : (

@@ -6,14 +6,14 @@ import { FiPlus, FiLogOut, FiTriangle } from "react-icons/fi";
 import { useAuth } from "@/hooks/useAuth";
 interface UserProps {
   login: string;
-  avatar_url: string;
+  avatarUrl: string;
   name?: string;
   email?: string;
 }
 
 export const UserMenu: React.FC<UserProps> = ({
   login,
-  avatar_url,
+  avatarUrl,
   name,
   email,
 }) => {
@@ -34,12 +34,12 @@ export const UserMenu: React.FC<UserProps> = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
+  
   return (
-    <div className="relative inline-block" ref={dropdownRef}>
+    <div className="relative z-20  inline-block" ref={dropdownRef}>
       {/* Avatar */}
       <Image
-        src={avatar_url}
+        src={avatarUrl}
         alt={`${login} avatar`}
         width={36}
         height={36}

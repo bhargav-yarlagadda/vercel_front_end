@@ -11,10 +11,13 @@ import React, {
 // Types
 // --------------------
 export type User = {
-  login: string;
-  avatar_url: string;
+  id: string;
+  githubId: string;
+  username: string;
+  avatarUrl: string;
   name?: string;
-  email?: string;
+  email?:string
+  createdAt?: string;
 };
 
 interface AuthContextType {
@@ -40,10 +43,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           { credentials: "include" } // sends cookies
         );
 
+
         if (!res.ok) {
           setUser(null);
         } else {
           const data = await res.json();
+          
           setUser(data?.user || null);
         }
       } catch (err) {

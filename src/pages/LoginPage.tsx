@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 const cardsContent = [
   { title: "Portfolio Site", desc: "Your personal website deployed instantly.", status: "Live", color: "text-green-400" },
@@ -21,6 +23,11 @@ const positions = [
 ];
 
 const LoginPage = () => {
+    const router = useRouter()
+    const {user} = useAuth()
+    if(user){
+        router.push("/dashboard")
+    }
   // only 4 cards
   const [order, setOrder] = useState([0, 1, 2, 3]);
 

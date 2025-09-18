@@ -6,7 +6,7 @@ import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
-import Loading from "@/components/common/Loader";
+
 
 
 const cardsContent = [
@@ -51,8 +51,8 @@ const LoginPage = () => {
 
   
   return (
-    <div className="min-h-screen w-full flex  items-center justify-center px-4 md:px-20 pb-10 text-white">
-      <div className="flex flex-col md:flex-row w-full  bg-black rounded-xl overflow-hidden">
+    <div className="min-h-screen w-full flex  items-center justify-center px-4 lg:px-20 pb-10 text-white">
+      <div className="flex flex-col lg:flex-row w-full  bg-black rounded-xl overflow-hidden">
         {/* Left side */}
         <div className="flex-1 flex items-center justify-center p-4 md:p-24 bg-black">
           <div className="relative w-full max-w-sm py-24 bg-black bg-opacity-90 border border-white/10 rounded-2xl p-8 flex flex-col items-center shadow-lg backdrop-blur-md z-10">

@@ -1,5 +1,6 @@
 import React from "react";
 import ViewRepositories from "./ViewRepositories";
+import DashboardPlaygound from "./DashboardPlaygound";
 
 const DashboardConsole = () => {
   return (
@@ -12,7 +13,8 @@ const DashboardConsole = () => {
       </div>
 
       {/* Right Column: 2/3 width */}
-      <div className="col-span-3 p-2">
+      <div className="col-span-3 border border-white/20 my-6 rounded-md p-2 n">
+        <DashboardPlaygound/>
         {/* Other dashboard content goes here */}
       </div>
     </div>

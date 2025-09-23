@@ -6,6 +6,7 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "react-hot-toast";
+import { ProjectProvider } from "@/context/ProjectContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,14 +33,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-         <Toaster
+        <Toaster
           position="top-right"
           reverseOrder={false}
           toastOptions={{
             duration: 3000,
             style: {
               background: "#1F2937", // Tailwind gray-800
-              color: "#F9FAFB",       // Tailwind gray-50
+              color: "#F9FAFB", // Tailwind gray-50
               padding: "12px 20px",
               borderRadius: "8px",
             },
@@ -47,11 +48,13 @@ export default function RootLayout({
         />
         <div id="modal-root"></div>
         <AuthProvider>
-          <>
-            <Navbar />
-            <div className="min-h-1/2">{children}</div>
-            <Footer />
-          </>
+          <ProjectProvider>
+            <>
+              <Navbar />
+              <div className="min-h-1/2">{children}</div>
+              <Footer />
+            </>
+          </ProjectProvider>
         </AuthProvider>
       </body>
     </html>

@@ -5,9 +5,11 @@ import Image from "next/image";
 import React, { useRef, useEffect, useState } from "react";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import AddProject from "./AddProject";
+import { useProjects } from "@/context/ProjectContext";
 
 const DashBoardNavbar = () => {
   const { user } = useAuth();
+  const {setSearchQuery} = useProjects()
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   useEffect(() => {
@@ -37,6 +39,9 @@ const DashBoardNavbar = () => {
         <FaSearch />
         <input
           ref={inputRef}
+          onChange={(e)=>{
+            setSearchQuery(e.target.value)
+          }}
           className="bg-transparent  focus:outline-none text-white placeholder-white/40 text-sm w-full"
           placeholder="Search Deployed Projects"
           type="text"

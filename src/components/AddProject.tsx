@@ -1,5 +1,6 @@
 "use client";
 
+import { useProjects } from "@/context/ProjectContext";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import toast from "react-hot-toast";
 
@@ -12,10 +13,12 @@ interface Repo {
 }
 
 interface AddProjectDropdownProps {
+  isOpen: boolean;
   onClose: () => void;
 }
 
 const AddProjectDropdown: React.FC<AddProjectDropdownProps> = ({ onClose }) => {
+  const { setProjects } = useProjects();
   const [repos, setRepos] = useState<Repo[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -94,10 +97,20 @@ const AddProjectDropdown: React.FC<AddProjectDropdownProps> = ({ onClose }) => {
         }
       );
       const data = await res.json();
+      const {project:createdProject} = data 
       if (!res.ok) throw new Error(data.error || "Failed to create project");
 
       toast.success("Project created successfully!"); // ✅ Toast here
-      
+      setProjects((prev) => [
+        ...prev,
+        {
+          id: createdProject.id,
+          name: createdProject.name,
+          repoUrl: createdProject.repoUrl,
+          updatedAt: createdProject.updatedAt,
+        },
+      ]);
+
       onClose();
     } catch (err: any) {
       toast.error(err.message); // ❌ Error toast

@@ -65,7 +65,7 @@ const LoginPage = () => {
             <h1 className="text-2xl font-bold mb-4"><span className="font-kode-mono">Lume</span> Deploy</h1>
             <p className="text-sm text-white/70 text-center mb-6">Deploy your projects instantly. Sign in with GitHub to get started.</p>
             <Link
-              className="bg-white p-2 items-center font-mono font-semibold justify-center gap-3 flex text-black rounded-md px-2"
+              className="bg-white p-2 text-xs md:text-lg items-center font-mono font-semibold justify-center gap-3 flex text-black rounded-md px-2"
               href={process.env.NEXT_PUBLIC_BACKEND_URL!+"/auth/github/login"}
             >
               Sign In With Github <FaGithub size={30}/>
